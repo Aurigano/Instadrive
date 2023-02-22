@@ -124,25 +124,14 @@ function RenameModal({ folder, file, parentFolderId, folderlist, filelist }) {
 	const { isModalOpen, setModalOpen } = driveContext;
 	const handleOpen = () => {
 		setModalOpen(true);
-		console.log("open");
 	};
 	const handleClose = () => {
 		setModalOpen(false);
 		setNewFilename("");
-		console.log("close");
 	};
 	const DriveData =
 		JSON.parse(localStorage.getItem("Drive")) ??
 		driveContext?.directoryState;
-
-	console.log("from mod", {
-		folder,
-		file,
-		parentFolderId,
-		folderlist,
-		filelist,
-		isFileSelected,
-	});
 
 	function getErrorName() {
 		if (newFilenameError) {
@@ -154,14 +143,6 @@ function RenameModal({ folder, file, parentFolderId, folderlist, filelist }) {
 	}
 
 	useEffect(() => {
-		console.log("newFilename", newFilename, {
-			folder,
-			file,
-			parentFolderId,
-			folderlist,
-			filelist,
-			isFileSelected,
-		});
 		let isNameMatching = false;
 
 		if (isFileSelected) {
@@ -217,7 +198,6 @@ function RenameModal({ folder, file, parentFolderId, folderlist, filelist }) {
 						className="create-btn"
 						disabled={newFilenameError}
 						onClick={() => {
-							console.log("Rename clicked");
 							renameDirectory(
 								parentFolderId,
 								DriveData,

@@ -167,7 +167,6 @@ function AddComponent({ folderlist, filelist, folderId, driveContext }) {
 		let isNameMatching = false;
 
 		if (isFileSelected) {
-			console.log("HERE JERE", !newFilename.includes("."));
 			setNewFilenameError(true);
 		}
 
@@ -190,7 +189,6 @@ function AddComponent({ folderlist, filelist, folderId, driveContext }) {
 	}, [newFilename]);
 
 	function getErrorName() {
-		console.log("JJJJJ", isFileSelected, newFilename);
 		if (newFilenameError) {
 			if (newFilename.length === 0) {
 				return "Filename can't be empty";
@@ -262,7 +260,6 @@ function AddComponent({ folderlist, filelist, folderId, driveContext }) {
 							className="create-btn"
 							disabled={newFilenameError}
 							onClick={() => {
-								console.log("Created clicked");
 								addToDirectory(
 									isFileSelected,
 									folderId,

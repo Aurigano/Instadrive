@@ -29,7 +29,6 @@ function FolderView() {
 	if (!folderInfo) {
 		folderInfo = DriveData;
 	}
-	console.log(folderInfo);
 	const folders = folderInfo?.children?.folders;
 	const files = folderInfo?.children?.files;
 
@@ -44,7 +43,6 @@ function FolderView() {
 	// }, [driveContext?.directoryState]);
 
 	function sendDataToParent(isFileSelectedFromChild, item) {
-		console.log("called", isFileSelectedFromChild, item);
 		setRenameModalItem(item);
 		setIsFilSelected(isFileSelectedFromChild);
 	}
