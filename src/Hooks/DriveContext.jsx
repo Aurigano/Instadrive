@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 
 const DriveContext = React.createContext();
 
@@ -17,7 +17,22 @@ export function DriveContextProvider({ children }) {
 					id: "1",
 					children: {
 						folders: [
-							{ name: "mno", id: "3", children: {}, path: "/" },
+							{
+								name: "mno",
+								id: "3",
+								children: {
+									folders: [
+										{
+											name: "stu",
+											id: "55",
+											children: {},
+											path: "/",
+										},
+									],
+									files: [{ name: "vwx", path: "/" }],
+								},
+								path: "/",
+							},
 						],
 						files: [{ name: "pqr", path: "/" }],
 					},
@@ -33,14 +48,38 @@ export function DriveContextProvider({ children }) {
 		path: "/",
 	};
 
-	const [directoryState, setDirectoryState] = useState(directory);
+	// localStorage.setItem("Drive", JSON.stringify(directoryState));
+	const DriveData = JSON.parse(localStorage.getItem("Drive"));
+	const recentId = JSON.parse(localStorage.getItem("id"));
+
+	const [directoryState, setDirectoryState] = useState(
+		DriveData || directory
+	);
+	useEffect(() => {
+		// console.log("DriveData changed", DriveData);
+		// setDirectoryState(DriveData);
+		if (DriveData) setDirectoryState(DriveData);
+		if (recentId) setUpdatedId(recentId);
+	}, []);
+
+	const [updatedId, setUpdatedId] = useState(6);
 
 	const name = "abc";
 	const activePath = "bcd";
+	const [isModalOpen, setModalOpen] = useState(false);
 
 	return (
 		<DriveContext.Provider
-			value={{ name, activePath, directoryState, setDirectoryState }}
+			value={{
+				name,
+				activePath,
+				directoryState,
+				setDirectoryState,
+				updatedId,
+				setUpdatedId,
+				isModalOpen,
+				setModalOpen,
+			}}
 		>
 			{children}
 		</DriveContext.Provider>

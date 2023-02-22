@@ -5,6 +5,7 @@ function App() {
 	return (
 		<BrowserRouter>
 			<Routes>
+				<Route path="/" element={<Drive />} />
 				<Route path="/mydrive" element={<Drive />} />
 				<Route path="/mydrive/folder/:folderId" element={<Drive />} />
 			</Routes>
