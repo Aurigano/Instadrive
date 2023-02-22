@@ -55,7 +55,7 @@ const ModalDiv = styled.div`
 		font-weight: 500;
 	}
 	.close-icon {
-		width: 20px;
+		width: 18px;
 		opacity: 0.6;
 		cursor: pointer;
 		margin-left: auto;
@@ -192,6 +192,19 @@ function RenameModal({ folder, file, parentFolderId, folderlist, filelist }) {
 						helperText={getErrorName()}
 						onChange={(event) => {
 							setNewFilename(event.target.value);
+						}}
+						onKeyPress={(e) => {
+							if (e.key === "Enter") {
+								renameDirectory(
+									parentFolderId,
+									DriveData,
+									isFileSelected ? file.name : folder.name,
+									isFileSelected,
+									newFilename,
+									driveContext
+								);
+								handleClose();
+							}
 						}}
 					/>
 					<Button

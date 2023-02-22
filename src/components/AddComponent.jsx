@@ -86,7 +86,7 @@ const ModalDiv = styled.div`
 		font-weight: 500;
 	}
 	.close-icon {
-		width: 20px;
+		width: 18px;
 		opacity: 0.6;
 		cursor: pointer;
 		margin-left: auto;
@@ -159,16 +159,16 @@ function AddComponent({ folderlist, filelist, folderId, driveContext }) {
 		setNewFilename("");
 	};
 
-	// React.useEffect(() => {
-	// 	console.log(folderlist, filelist, folderId);
-	// }, []);
+	// for files to have extension
+	let extension;
+	if (newFilename.includes(".")) {
+		var index = newFilename.lastIndexOf(".");
+		extension = newFilename.substring(index + 1);
+	}
+
 	React.useEffect(() => {
 		// console.log("newFilename", newFilename);
 		let isNameMatching = false;
-
-		if (isFileSelected) {
-			setNewFilenameError(true);
-		}
 
 		if (isFileSelected) {
 			if (filelist) {
@@ -183,7 +183,11 @@ function AddComponent({ folderlist, filelist, folderId, driveContext }) {
 				});
 			}
 		}
+
+		// deciding error
 		if (isNameMatching || newFilename.length === 0)
+			setNewFilenameError(true);
+		else if (isFileSelected && (!extension || extension.length === 0))
 			setNewFilenameError(true);
 		else setNewFilenameError(false);
 	}, [newFilename]);
@@ -192,6 +196,11 @@ function AddComponent({ folderlist, filelist, folderId, driveContext }) {
 		if (newFilenameError) {
 			if (newFilename.length === 0) {
 				return "Filename can't be empty";
+			} else if (
+				isFileSelected &&
+				(!extension || extension.length === 0)
+			) {
+				return "Files should have extensions.";
 			} else return "File/Folder name already exists.";
 		}
 		return null;
@@ -254,6 +263,17 @@ function AddComponent({ folderlist, filelist, folderId, driveContext }) {
 							helperText={getErrorName()}
 							onChange={(event) => {
 								setNewFilename(event.target.value);
+							}}
+							onKeyPress={(e) => {
+								if (e.key === "Enter") {
+									addToDirectory(
+										isFileSelected,
+										folderId,
+										driveContext,
+										newFilename
+									);
+									handleClose();
+								}
 							}}
 						/>
 						<Button
