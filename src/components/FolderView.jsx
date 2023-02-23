@@ -19,7 +19,7 @@ function FolderView() {
 	const [renameModalItem, setRenameModalItem] = useState({});
 	const [isFileSelected, setIsFilSelected] = useState(false);
 	const driveContext = useDriveContext();
-	const { folderId } = useParams();
+	const { folderId = null } = useParams();
 	const { state = {} } = useLocation();
 	const DriveData =
 		JSON.parse(localStorage.getItem("Drive")) ??
@@ -32,7 +32,7 @@ function FolderView() {
 	const folders = folderInfo?.children?.folders;
 	const files = folderInfo?.children?.files;
 
-	// console.log("folderInfo", folderId, state, folderInfo, folders, files);
+	console.log("folderInfo", folderId, state, folderInfo, folders, files);
 
 	// useEffect(() => {
 	// 	console.log("abc", folderId, state);
@@ -75,7 +75,6 @@ function FolderView() {
 				folderlist={folders}
 				filelist={files}
 				folderId={folderId}
-				driveContext={driveContext}
 			/>
 			<RenameModal
 				folder={!isFileSelected && renameModalItem}

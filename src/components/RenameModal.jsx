@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 import CloseIcon from "../assets/close.png";
 import { useDriveContext } from "../Hooks/DriveContext";
 import renameDirectory from "../Hooks/renameDirectory";
+import { useFocusableInput } from "../Hooks/useFocusableInput";
 
 const StyledTextField = styled(TextField)`
 	width: 250px;
@@ -164,6 +165,7 @@ function RenameModal({ folder, file, parentFolderId, folderlist, filelist }) {
 			setNewFilenameError(true);
 		else setNewFilenameError(false);
 	}, [newFilename]);
+
 	return (
 		<Modal
 			open={isModalOpen}
@@ -193,6 +195,7 @@ function RenameModal({ folder, file, parentFolderId, folderlist, filelist }) {
 						onChange={(event) => {
 							setNewFilename(event.target.value);
 						}}
+						inputRef={useFocusableInput}
 						onKeyPress={(e) => {
 							if (e.key === "Enter") {
 								renameDirectory(

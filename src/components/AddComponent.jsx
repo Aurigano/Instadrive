@@ -7,6 +7,9 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
 import addToDirectory from "../Hooks/addToDirectory";
+import addDirectory from "../Hooks/addDirectory";
+import { useDriveContext } from "../Hooks/DriveContext";
+import { useFocusableInput } from "../Hooks/useFocusableInput";
 
 const FolderIconDiv = styled.div`
 	flex: 1 0 16.5%;
@@ -147,16 +150,22 @@ const ModalDiv = styled.div`
 	}
 `;
 
-function AddComponent({ folderlist, filelist, folderId, driveContext }) {
+function AddComponent({ folderlist, filelist, folderId }) {
 	const [open, setOpen] = React.useState(false);
 	const [isFileSelected, setIsFileSelected] = React.useState(true);
 	const [newFilename, setNewFilename] = React.useState("");
 	const [newFilenameError, setNewFilenameError] = React.useState(false);
+	const driveContext = useDriveContext();
+
+	const DriveData =
+		JSON.parse(localStorage.getItem("Drive")) ??
+		driveContext?.directoryState;
 
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => {
 		setOpen(false);
 		setNewFilename("");
+		console.log("close");
 	};
 
 	// for files to have extension
@@ -167,7 +176,6 @@ function AddComponent({ folderlist, filelist, folderId, driveContext }) {
 	}
 
 	React.useEffect(() => {
-		// console.log("newFilename", newFilename);
 		let isNameMatching = false;
 
 		if (isFileSelected) {
@@ -264,13 +272,15 @@ function AddComponent({ folderlist, filelist, folderId, driveContext }) {
 							onChange={(event) => {
 								setNewFilename(event.target.value);
 							}}
+							inputRef={useFocusableInput}
 							onKeyPress={(e) => {
 								if (e.key === "Enter") {
-									addToDirectory(
-										isFileSelected,
+									addDirectory(
 										folderId,
-										driveContext,
-										newFilename
+										DriveData,
+										newFilename,
+										isFileSelected,
+										driveContext
 									);
 									handleClose();
 								}
@@ -280,13 +290,15 @@ function AddComponent({ folderlist, filelist, folderId, driveContext }) {
 							className="create-btn"
 							disabled={newFilenameError}
 							onClick={() => {
-								addToDirectory(
-									isFileSelected,
+								addDirectory(
 									folderId,
-									driveContext,
-									newFilename
+									DriveData,
+									newFilename,
+									isFileSelected,
+									driveContext
 								);
 								handleClose();
+								console.log("reached here");
 							}}
 						>
 							Create
