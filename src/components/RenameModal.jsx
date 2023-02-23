@@ -138,12 +138,10 @@ function RenameModal({ folder, file, parentFolderId, folderlist, filelist }) {
 	const { isModalOpen, setModalOpen } = driveContext;
 	const handleOpen = () => {
 		setModalOpen(true);
-		console.log("open");
 	};
 	const handleClose = () => {
 		setModalOpen(false);
 		setNewFilename("");
-		console.log("close");
 	};
 	const DriveData =
 		JSON.parse(localStorage.getItem("Drive")) ??
