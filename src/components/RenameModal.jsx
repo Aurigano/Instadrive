@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 import CloseIcon from "../assets/close.png";
 import { useDriveContext } from "../Hooks/DriveContext";
 import renameDirectory from "../Hooks/renameDirectory";
+import { useFocusableInput } from "../Hooks/useFocusableInput";
 
 const StyledTextField = styled(TextField)`
 	width: 250px;
@@ -135,15 +136,6 @@ function RenameModal({ folder, file, parentFolderId, folderlist, filelist }) {
 		JSON.parse(localStorage.getItem("Drive")) ??
 		driveContext?.directoryState;
 
-	console.log("from mod", {
-		folder,
-		file,
-		parentFolderId,
-		folderlist,
-		filelist,
-		isFileSelected,
-	});
-
 	function getErrorName() {
 		if (newFilenameError) {
 			if (newFilename.length === 0) {
@@ -154,14 +146,6 @@ function RenameModal({ folder, file, parentFolderId, folderlist, filelist }) {
 	}
 
 	useEffect(() => {
-		console.log("newFilename", newFilename, {
-			folder,
-			file,
-			parentFolderId,
-			folderlist,
-			filelist,
-			isFileSelected,
-		});
 		let isNameMatching = false;
 
 		if (isFileSelected) {
@@ -183,6 +167,7 @@ function RenameModal({ folder, file, parentFolderId, folderlist, filelist }) {
 			setNewFilenameError(true);
 		else setNewFilenameError(false);
 	}, [newFilename]);
+
 	return (
 		<Modal
 			open={isModalOpen}
@@ -212,6 +197,7 @@ function RenameModal({ folder, file, parentFolderId, folderlist, filelist }) {
 						onChange={(event) => {
 							setNewFilename(event.target.value);
 						}}
+						inputRef={useFocusableInput}
 						onKeyPress={(e) => {
 							if (e.key === "Enter") {
 								renameDirectory(
@@ -230,7 +216,6 @@ function RenameModal({ folder, file, parentFolderId, folderlist, filelist }) {
 						className="create-btn"
 						disabled={newFilenameError}
 						onClick={() => {
-							console.log("Rename clicked");
 							renameDirectory(
 								parentFolderId,
 								DriveData,

@@ -72,6 +72,7 @@ function BreadcrumbBar() {
 					return (
 						<button
 							key={`${parent.id}`}
+							id={`${parent.id}`}
 							className="parent-btn"
 							onClick={() => navigate(link)}
 						>
@@ -80,6 +81,7 @@ function BreadcrumbBar() {
 									index === breadcrumbArray.length - 1 &&
 									"current-route"
 								} breadcrumb-text`}
+								id={`${parent.id}`}
 							>
 								{parent.name}
 							</p>

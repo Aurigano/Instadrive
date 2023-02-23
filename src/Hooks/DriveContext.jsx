@@ -7,48 +7,55 @@ export function useDriveContext() {
 }
 
 export function DriveContextProvider({ children }) {
-	const directory = {
-		name: "root",
-		id: null,
-		children: {
-			folders: [
-				{
-					name: "abc",
-					id: "1",
-					children: {
-						folders: [
-							{
-								name: "mno",
-								id: "3",
-								children: {
-									folders: [
-										{
-											name: "stu",
-											id: "55",
-											children: {},
-											path: "/",
-										},
-									],
-									files: [{ name: "vwx", path: "/" }],
-								},
-								path: "/",
-							},
-						],
-						files: [{ name: "pqr", path: "/" }],
-					},
-					path: "/",
-				},
-				{ name: "def", id: "2", children: {}, path: "/" },
-			],
-			files: [
-				{ name: "ghi", path: "/" },
-				{ name: "jkl", path: "/" },
-			],
-		},
-		path: "/",
-	};
+	// const directory = {
+	// 	name: "root",
+	// 	id: null,
+	// 	children: {
+	// 		folders: [
+	// 			{
+	// 				name: "abc",
+	// 				id: "1",
+	// 				children: {
+	// 					folders: [
+	// 						{
+	// 							name: "mno",
+	// 							id: "3",
+	// 							children: {
+	// 								folders: [
+	// 									{
+	// 										name: "stu",
+	// 										id: "55",
+	// 										children: {},
+	// 										path: "/",
+	// 									},
+	// 								],
+	// 								files: [{ name: "vwx", path: "/" }],
+	// 							},
+	// 							path: "/",
+	// 						},
+	// 					],
+	// 					files: [{ name: "pqr", path: "/" }],
+	// 				},
+	// 				path: "/",
+	// 			},
+	// 			{ name: "def", id: "2", children: {}, path: "/" },
+	// 		],
+	// 		files: [
+	// 			{ name: "ghi", path: "/" },
+	// 			{ name: "jkl", path: "/" },
+	// 		],
+	// 	},
+	// 	path: "/",
+	// };
 
 	// localStorage.setItem("Drive", JSON.stringify(directoryState));
+
+	const directory = {
+		id: null,
+		name: "root",
+		children: {},
+		path: "/",
+	};
 	const DriveData = JSON.parse(localStorage.getItem("Drive"));
 	const recentId = JSON.parse(localStorage.getItem("id"));
 
