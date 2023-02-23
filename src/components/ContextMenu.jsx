@@ -9,7 +9,7 @@ const ContextMenuDiv = styled.div`
 	position: absolute;
 	width: 200px;
 	background-color: #fff;
-	box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.4);
 	// top: ${(props) => `${props.top}px`};
 	// left: ${({ left }) => `${left}px`};
 	${({ top, left }) => css`
@@ -24,6 +24,7 @@ const ContextMenuDiv = styled.div`
 		border: none;
 		padding: 15px;
 		font-size: 15px;
+		font-weight: 500;
 		text-align: left;
 		color: #4c545b;
 		cursor: pointer;
