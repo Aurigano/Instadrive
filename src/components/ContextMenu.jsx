@@ -57,7 +57,6 @@ function ContextMenu({
 	const { isModalOpen, setModalOpen } = driveContext;
 	const handleOpen = () => {
 		setModalOpen(true);
-		console.log("open");
 	};
 
 	// React.useEffect(() => {
@@ -68,8 +67,6 @@ function ContextMenu({
 		JSON.parse(localStorage.getItem("Drive")) ??
 		driveContext?.directoryState;
 	// console.log("from context", DriveData);
-	console.log(folder);
-	console.log(file);
 	// console.log(parentFolderId);
 	const isFileSelected = !!file; // boolean shorthand to check if it exists
 
@@ -155,7 +152,6 @@ export default ContextMenu;
 							className="create-btn"
 							disabled={newFilenameError}
 							onClick={() => {
-								console.log("Created clicked");
 								addToDirectory(
 									isFileSelected,
 									folderId,
