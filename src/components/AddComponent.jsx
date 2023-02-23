@@ -101,29 +101,32 @@ const ModalDiv = styled.div`
 	.component-selector {
 		text-decoration: none;
 	}
-	.file-btn {
+	.switch-btn {
 		font-family: "Work Sans";
 		border: 1px solid #69696936;
 		border-radius: 10px 0 0 10px;
 		text-transform: none;
 		color: black;
 		padding: 2px;
+		line-height: 1.75;
+		letter-spacing: 0.02857em;
+		min-width: 75px;
+		font-size: 14px;
+		font-weight: 500;
 	}
-	.folder-btn {
-		font-family: "Work Sans";
-		border: 1.5px solid #69696936;
+	.file-borders {
+		border-radius: 10px 0 0 10px;
+	}
+	.folder-borders {
 		border-radius: 0 10px 10px 0;
-		text-transform: none;
-		color: black;
-		padding: 2px;
 	}
 	.active {
 		background: #4ab7ff;
-		border: none;
-		outline: 1px solid #4ab7ff;
+		border: 1px solid #4ab7ff;
 		color: white;
 		:hover {
 			background: #4ab7ff;
+			cursor: default;
 		}
 	}
 	.create-btn {
@@ -135,18 +138,28 @@ const ModalDiv = styled.div`
 		border-radius: 12px;
 		padding: 10px;
 		font-size: 18px;
-		:hover : {
-			outline: 1px solid #4ab7ff;
+		font-weight: 500;
+		line-height: 1.75;
+		letter-spacing: 0.02857em;
+		:hover {
+			outline: 2px solid #4ab7ff;
+			outline-offset: -2px;
 			color: #4ab7ff !important;
+			background: transparent;
 		}
-	}
-	.css-1e6y48t-MuiButtonBase-root-MuiButton-root:hover {
-		outline: 1px solid #4ab7ff;
-		color: #4ab7ff !important;
 	}
 	button {
 		background: transparent;
 		border: none;
+	}
+	button:disabled,
+	button[disabled] {
+		pointer-events: none;
+		cursor: default;
+		color: rgba(0, 0, 0, 0.26);
+	}
+	button:hover {
+		cursor: pointer;
 	}
 `;
 
@@ -243,22 +256,22 @@ function AddComponent({ folderlist, filelist, folderId }) {
 						</button>
 						<p className="modal-heading">Create new</p>
 						<div className="component-selector">
-							<Button
+							<button
 								className={`${
 									isFileSelected ? "active" : ""
-								} file-btn`}
+								} switch-btn file-borders`}
 								onClick={() => setIsFileSelected(true)}
 							>
 								File
-							</Button>
-							<Button
+							</button>
+							<button
 								className={`${
 									!isFileSelected ? "active" : ""
-								} folder-btn`}
+								} switch-btn folder-borders`}
 								onClick={() => setIsFileSelected(false)}
 							>
 								Folder
-							</Button>
+							</button>
 						</div>
 
 						<StyledTextField
@@ -286,7 +299,7 @@ function AddComponent({ folderlist, filelist, folderId }) {
 								}
 							}}
 						/>
-						<Button
+						<button
 							className="create-btn"
 							disabled={newFilenameError}
 							onClick={() => {
@@ -302,7 +315,7 @@ function AddComponent({ folderlist, filelist, folderId }) {
 							}}
 						>
 							Create
-						</Button>
+						</button>
 					</div>
 				</ModalDiv>
 			</Modal>

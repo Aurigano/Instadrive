@@ -68,29 +68,32 @@ const ModalDiv = styled.div`
 	.component-selector {
 		text-decoration: none;
 	}
-	.file-btn {
+	.switch-btn {
 		font-family: "Work Sans";
 		border: 1px solid #69696936;
 		border-radius: 10px 0 0 10px;
 		text-transform: none;
 		color: black;
 		padding: 2px;
+		line-height: 1.75;
+		letter-spacing: 0.02857em;
+		min-width: 75px;
+		font-size: 14px;
+		font-weight: 500;
 	}
-	.folder-btn {
-		font-family: "Work Sans";
-		border: 1.5px solid #69696936;
+	.file-borders {
+		border-radius: 10px 0 0 10px;
+	}
+	.folder-borders {
 		border-radius: 0 10px 10px 0;
-		text-transform: none;
-		color: black;
-		padding: 2px;
 	}
 	.active {
 		background: #4ab7ff;
-		border: none;
-		outline: 1px solid #4ab7ff;
+		border: 1px solid #4ab7ff;
 		color: white;
 		:hover {
 			background: #4ab7ff;
+			cursor: default;
 		}
 	}
 	.create-btn {
@@ -102,18 +105,28 @@ const ModalDiv = styled.div`
 		border-radius: 12px;
 		padding: 10px;
 		font-size: 18px;
-		:hover : {
-			outline: 1px solid #4ab7ff;
+		font-weight: 500;
+		line-height: 1.75;
+		letter-spacing: 0.02857em;
+		:hover {
+			outline: 2px solid #4ab7ff;
+			outline-offset: -2px;
 			color: #4ab7ff !important;
+			background: transparent;
 		}
-	}
-	.css-1e6y48t-MuiButtonBase-root-MuiButton-root:hover {
-		outline: 1px solid #4ab7ff;
-		color: #4ab7ff !important;
 	}
 	button {
 		background: transparent;
 		border: none;
+	}
+	button:disabled,
+	button[disabled] {
+		pointer-events: none;
+		cursor: default;
+		color: rgba(0, 0, 0, 0.26);
+	}
+	button:hover {
+		cursor: pointer;
 	}
 `;
 
@@ -134,13 +147,11 @@ function RenameModal({ folder, file, parentFolderId, folderlist, filelist }) {
 		JSON.parse(localStorage.getItem("Drive")) ??
 		driveContext?.directoryState;
 
-	function getErrorName() {
-		if (newFilenameError) {
-			if (newFilename.length === 0) {
-				return "Filename can't be empty";
-			} else return "File/Folder name already exists.";
-		}
-		return null;
+	// for files to have extension
+	let extension;
+	if (newFilename.includes(".")) {
+		var index = newFilename.lastIndexOf(".");
+		extension = newFilename.substring(index + 1);
 	}
 
 	useEffect(() => {
@@ -163,8 +174,24 @@ function RenameModal({ folder, file, parentFolderId, folderlist, filelist }) {
 		if (newFilename === itemName) setNewFilenameError(false);
 		else if (isNameMatching || newFilename.length === 0)
 			setNewFilenameError(true);
+		else if (isFileSelected && (!extension || extension.length === 0))
+			setNewFilenameError(true);
 		else setNewFilenameError(false);
 	}, [newFilename]);
+
+	function getErrorName() {
+		if (newFilenameError) {
+			if (newFilename.length === 0) {
+				return "Filename can't be empty";
+			} else if (
+				isFileSelected &&
+				(!extension || extension.length === 0)
+			) {
+				return "Files should have extensions.";
+			} else return "File/Folder name already exists.";
+		}
+		return null;
+	}
 
 	return (
 		<Modal
@@ -210,7 +237,7 @@ function RenameModal({ folder, file, parentFolderId, folderlist, filelist }) {
 							}
 						}}
 					/>
-					<Button
+					<button
 						className="create-btn"
 						disabled={newFilenameError}
 						onClick={() => {
@@ -226,7 +253,7 @@ function RenameModal({ folder, file, parentFolderId, folderlist, filelist }) {
 						}}
 					>
 						Rename
-					</Button>
+					</button>
 				</div>
 			</ModalDiv>
 		</Modal>
